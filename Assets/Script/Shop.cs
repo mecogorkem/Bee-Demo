@@ -18,6 +18,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private TextMeshProUGUI flowerText;
+    [SerializeField] private GameObject mainWasp;
 
     private void Start()
     {
@@ -92,6 +93,7 @@ public class Shop : MonoBehaviour
 
     public void CloseShop()
     {
+        mainWasp.SetActive(true);
         this.gameObject.SetActive(false);
     }
 }

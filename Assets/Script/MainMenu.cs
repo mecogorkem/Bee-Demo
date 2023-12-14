@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject levelSelectPage;
     [SerializeField] private AudioSource ambiance;
     [SerializeField] private GameObject skinStore;
+    [SerializeField] private GameObject wasp;
     private void Start()
     {
         flowerCount.text = Client.Instance.player.flower.ToString();
@@ -33,6 +34,7 @@ public class MainMenu : MonoBehaviour
     public void OpenSkinStore()
     {
         skinStore.SetActive(true);
+        wasp.SetActive(false);
     }
 
     public void ChangeLevelPageStatues()

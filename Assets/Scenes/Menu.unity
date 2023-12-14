@@ -4348,6 +4348,7 @@ MonoBehaviour:
   buttonText: {fileID: 923662979}
   priceText: {fileID: 382268051}
   flowerText: {fileID: 622590945}
+  mainWasp: {fileID: 1804661268}
 --- !u!1 &1402877487
 GameObject:
   m_ObjectHideFlags: 0
@@ -4859,6 +4860,7 @@ MonoBehaviour:
   levelSelectPage: {fileID: 1594930795}
   ambiance: {fileID: 1473022014}
   skinStore: {fileID: 1330610340}
+  wasp: {fileID: 1804661268}
 --- !u!4 &1509959655
 Transform:
   m_ObjectHideFlags: 0
