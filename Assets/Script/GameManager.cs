@@ -146,13 +146,16 @@ public class GameManager : MonoBehaviour
         _collectedBee -= value;
         collectedBeeText.text = _collectedBee.ToString();
         audioSource.PlayOneShot(takeDamage);
-        foreach (Transform child in childWaspList)
+        var currentValue = value;
+
+        int i = 0;
+        int max = childWaspList.childCount - 1;
+        while (max-i >= 0 && currentValue>0)
         {
-            if (childWaspList.childCount<=0)
-            {
-                break;
-            }
-            GameObject.Destroy(child.gameObject);
+            GameObject.Destroy(childWaspList.GetChild(max-i).gameObject);
+            currentValue--;
+            i++;
+
         }
 
         DropParticle(mobParticle);
