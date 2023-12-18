@@ -12,7 +12,23 @@ public class Player
     private int _reachedLevel;
     private bool _sound;
     public List<SkinType> availableSet;
-    public SkinType activeSkin;
+    public delegate void EventHandler();
+
+    public event EventHandler skinChanged;
+    public SkinType activeSkin
+    {
+        get
+        {
+            return _activeSkin;
+        }
+        set
+        {
+            _activeSkin = value;
+            skinChanged?.Invoke();
+        }
+    }
+
+    private SkinType _activeSkin;
 
     public int MaxLevel;
 

@@ -97,7 +97,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip windGame;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource ambianceSource;
-    [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+    [SerializeField] private Transform childWaspList;
+    [SerializeField] private GameObject childWasp;
+    [SerializeField] private GameObject beeParticle;
+    [SerializeField] private GameObject flowerParticle;
+    [SerializeField] private GameObject mobParticle;
     private int _collectedBee;
     private int _collectedFlower;
 
@@ -113,7 +117,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _meshRenderer.material = Resources.Load<Material>($"Materials/{(int)Client.Instance.player.activeSkin}");
         mapGenerator.Initialize(_levelDatas[Client.Instance.currentLevel-1]);
         audioSource.mute = !Client.Instance.player.sound;
         ambianceSource.mute = !Client.Instance.player.sound;
@@ -125,6 +128,17 @@ public class GameManager : MonoBehaviour
         _collectedBee += value;
         collectedBeeText.text = _collectedBee.ToString();
         audioSource.PlayOneShot(beeCollect);
+        var childCount = childWaspList.childCount;
+        for (int i = 0; i < value; i++)
+        {
+            var currentChildValue = childCount + i;
+            int zIndex = ((currentChildValue - (currentChildValue % 3))/3)+1;
+            int xIndex = (currentChildValue % 3)-1;
+            var obj = Instantiate(childWasp, childWaspList);
+            obj.transform.localPosition = new Vector3(xIndex*0.5f, 0.4f, zIndex*0.5f);
+        }
+
+        DropParticle(beeParticle);
     }
 
     public void LoseBee(int value)
@@ -132,7 +146,16 @@ public class GameManager : MonoBehaviour
         _collectedBee -= value;
         collectedBeeText.text = _collectedBee.ToString();
         audioSource.PlayOneShot(takeDamage);
+        foreach (Transform child in childWaspList)
+        {
+            if (childWaspList.childCount<=0)
+            {
+                break;
+            }
+            GameObject.Destroy(child.gameObject);
+        }
 
+        DropParticle(mobParticle);
         if (_collectedBee<0)
         {
             Gameover();
@@ -144,6 +167,7 @@ public class GameManager : MonoBehaviour
         _collectedFlower += value;
         collectedFlowerTmp.text = _collectedFlower.ToString();
         audioSource.PlayOneShot(flowerCollect);
+        DropParticle(flowerParticle);
     }
 
     private void Gameover()
@@ -215,5 +239,11 @@ public class GameManager : MonoBehaviour
         collectedFlowerTmp2.text = _collectedFlower.ToString();
         bonusFlowerText.text = (_collectedFlower*2).ToString();
         Client.Instance.player.AddFlower(_collectedFlower);
+    }
+
+    private void DropParticle(GameObject particle)
+    {
+        var part = Instantiate(particle);
+        part.transform.position = new Vector3(0,0.65f,0)+mainWasp.transform.position;
     }
 }

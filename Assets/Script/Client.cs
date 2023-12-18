@@ -12,6 +12,8 @@ public class Client : MonoBehaviour
 
     public int currentLevel => _currentLevel;
 
+
+
     private void Awake()
     {
         if (Instance!=null)

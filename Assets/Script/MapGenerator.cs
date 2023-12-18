@@ -231,7 +231,7 @@ public class MapGenerator : MonoBehaviour
             foreach (var vector in beehiveVector)
             {
               
-                if (point != vector && Vector3.Distance(point, vector) < gizmosRadius*6)
+                if (Vector3.Distance(point, vector) < gizmosRadius*3)
                 {
                     canDrawSphere = false;
                     break;
